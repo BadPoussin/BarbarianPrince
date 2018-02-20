@@ -1,59 +1,64 @@
 import math
 
+size = 19.5
+
 
 class Point:
-    def __init__(self, x=67, y=65):
+    def __init__(self, x=76.5, y=97):
         self.x = x
         self.y = y
-
-
-class Cube:
-    def __init__(self, x=0, y=0, z=0):
-        self.x = x
-        self.y = y
-        self.z = z
 
 
 def create_grid():
     listPoints = []
-    size = 23
     center = Point()
 
-    for y in range(0, 6):
-        for x in range(0, 6):
-            cube = oddq_to_cube(x, y)
-            point = cube_to_axial(cube)
+    for y in range(0, 23):
+        for x in range(0, 20):
+            point = oddq_offset_to_pixel(x, y, size)
             newCenter = Point(int(center.x + point.x), int(center.y + point.y))
             listPoints.append(create_list(newCenter, size))
 
     return listPoints
 
 
-def hex_to_pixel(q, r, size):
-    y = size * math.sqrt(3) * (r + q / 2)
+def update_grid(posX, posY):
+    listPoints = []
+    hexToColored = []
+    hexCliqued = 0
+    center = Point()
+
+    for y in range(0, 23):
+        for x in range(0, 20):
+            point = oddq_offset_to_pixel(x, y, size)
+            newCenter = Point(int(center.x + point.x), int(center.y + point.y))
+            listPoints.append(create_list(newCenter, size))
+            if math.sqrt(math.pow(newCenter.x - posX, 2) + math.pow(newCenter.y - posY, 2)) < size:
+                hexCliqued = len(listPoints) - 1
+                if x == 0:
+                    hexToColored = [len(listPoints), len(listPoints) - 20,
+                                    hexCliqued - 20, hexCliqued + 20]
+                elif x == 19:
+                    hexToColored = [len(listPoints) - 2, len(listPoints) + 18,
+                                    hexCliqued - 20, hexCliqued + 20]
+                elif x % 2 != 0:
+                    hexToColored = [len(listPoints) - 2, len(listPoints), len(listPoints) + 18, len(listPoints) + 20,
+                                    hexCliqued - 20, hexCliqued + 20]
+                else:
+                    hexToColored = [len(listPoints) - 2, len(listPoints), len(listPoints) - 22, len(listPoints) - 20,
+                                    hexCliqued - 20, hexCliqued + 20]
+
+    return listPoints, hexCliqued, hexToColored
+
+
+def search_hexagon(pos):
+    return update_grid(pos[0], pos[1])
+
+
+def oddq_offset_to_pixel(q, r, size):
     x = size * 3 / 2 * q
+    y = size * math.sqrt(3) * (r + 0.5 * (q & 1))
     return Point(x, y)
-
-
-def oddq_to_cube(q, r):
-    x = q
-    z = r - (q - q & 1) / 2
-    y = -x - z
-    cube = Cube(x, y, z)
-    return cube
-
-
-def cube_to_axial(cube):
-    q = cube.x
-    r = cube.z
-    point = Point(q, r)
-    return point
-
-
-def cube_to_oddq(cube):
-    col = cube.x
-    row = cube.z + (cube.x - (cube.x & 1)) / 2
-    return Point(col, row)
 
 
 def create_list(center, size):
