@@ -25,8 +25,9 @@ def create_grid():
 def update_grid(posX, posY):
     listPoints = []
     hexToColored = []
-    hexCliqued = 0
+    hexCliqued = -1
     center = Point()
+    hexCenter = Point()
 
     for y in range(0, 23):
         for x in range(0, 20):
@@ -35,6 +36,7 @@ def update_grid(posX, posY):
             listPoints.append(create_list(newCenter, size))
             if math.sqrt(math.pow(newCenter.x - posX, 2) + math.pow(newCenter.y - posY, 2)) < size:
                 hexCliqued = len(listPoints) - 1
+                hexCenter = newCenter
                 if x == 0:
                     hexToColored = [len(listPoints), len(listPoints) - 20,
                                     hexCliqued - 20, hexCliqued + 20]
@@ -48,7 +50,7 @@ def update_grid(posX, posY):
                     hexToColored = [len(listPoints) - 2, len(listPoints), len(listPoints) - 22, len(listPoints) - 20,
                                     hexCliqued - 20, hexCliqued + 20]
 
-    return listPoints, hexCliqued, hexToColored
+    return listPoints, hexCliqued, hexCenter, hexToColored
 
 
 def search_hexagon(pos):
