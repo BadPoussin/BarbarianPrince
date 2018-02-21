@@ -8,6 +8,7 @@ from grid import *
 
 
 def main():
+    toto=""
     pygame.init()
     dimImage = (707, 1000)
     os.environ['SDL_VIDEO_WINDOW_POS'] = "%d,%d" % (100, 50)
