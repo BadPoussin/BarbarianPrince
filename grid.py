@@ -1,6 +1,41 @@
 import math
 
+listTerrain = ['plaine', 'fermes', 'collines', 'forêt', 'marais', 'montagnes', 'desert']
+typeTerrain = [0, 5, 5, 3, 3, 0, 0, 2, 5, 2, 2, 3, 0, 4, 1, 1, 2, 5, 5, 5,
+               0, 3, 3, 3, 0, 0, 0, 3, 0, 3, 2, 3, 4, 0, 4, 0, 2, 5, 5, 5,
+               5, 3, 3, 5, 5, 5, 5, 3, 3, 2, 4, 2, 0, 0, 3, 5, 5, 0, 5, 2,
+               0, 2, 5, 5, 5, 0, 0, 5, 2, 0, 0, 5, 3, 3, 3, 3, 0, 5, 2, 0,
+               2, 2, 0, 5, 3, 2, 3, 3, 0, 0, 5, 0, 0, 2, 5, 5, 5, 5, 0, 2,
+               6, 6, 6, 2, 2, 3, 0, 2, 0, 5, 5, 5, 2, 2, 5, 6, 5, 5, 0, 5,
+               2, 2, 2, 6, 0, 0, 0, 3, 0, 3, 2, 5, 5, 6, 6, 6, 6, 5, 5, 2,
+               0, 0, 0, 3, 3, 0, 0, 3, 3, 0, 2, 2, 6, 6, 6, 6, 6, 2, 5, 5,
+               0, 0, 3, 3, 3, 4, 3, 3, 0, 1, 2, 2, 6, 6, 6, 6, 2, 5, 5, 2,
+               0, 0, 3, 0, 0, 3, 4, 0, 0, 2, 0, 0, 2, 2, 6, 2, 6, 5, 5, 2,
+               3, 0, 0, 4, 4, 4, 3, 3, 3, 2, 5, 5, 5, 2, 2, 5, 2, 2, 0, 5,
+               0, 0, 4, 0, 0, 0, 3, 3, 2, 0, 2, 5, 3, 2, 2, 2, 5, 2, 2, 5,
+               0, 4, 4, 0, 3, 0, 4, 3, 3, 0, 2, 0, 5, 3, 0, 0, 2, 2, 2, 2,
+               4, 4, 3, 3, 3, 0, 0, 3, 4, 0, 5, 5, 0, 1, 0, 0, 0, 0, 0, 0,
+               4, 3, 3, 0, 0, 0, 3, 3, 3, 4, 0, 2, 0, 1, 1, 0, 3, 3, 0, 3,
+               3, 1, 0, 0, 3, 3, 3, 1, 1, 4, 0, 0, 1, 0, 0, 0, 3, 4, 3, 4,
+               3, 1, 1, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 3, 3, 4, 3, 3, 3, 3,
+               3, 0, 0, 1, 3, 1, 0, 0, 3, 3, 0, 3, 0, 0, 3, 3, 0, 2, 0, 0,
+               0, 0, 1, 1, 1, 1, 1, 0, 0, 2, 4, 3, 0, 3, 3, 0, 2, 0, 0, 0,
+               0, 3, 0, 1, 0, 0, 0, 0, 0, 5, 3, 3, 0, 0, 3, 0, 0, 3, 3, 3,
+               0, 3, 0, 3, 0, 0, 3, 0, 0, 5, 5, 0, 0, 4, 3, 3, 4, 3, 1, 1,
+               0, 1, 1, 1, 3, 0, 0, 0, 2, 5, 5, 3, 0, 4, 4, 4, 3, 1, 1, 1,
+               3, 0, 1, 1, 0, 0, 3, 0, 2, 2, 5, 5, 0, 4, 4, 4, 0, 0, 1, 1]
+optionsTerrain = []
+listHexagon = []
 size = 19.5
+
+class Hexagon:
+    def __init__(self, x, y, center, index, type, options):
+        self.x = x
+        self.y = y
+        self.center = center
+        self.index = index
+        self.type = type
+        self.options = options
 
 
 class Point:
@@ -18,6 +53,7 @@ def create_grid():
             point = oddq_offset_to_pixel(x, y, size)
             newCenter = Point(int(center.x + point.x), int(center.y + point.y))
             listPoints.append(create_list(newCenter, size))
+            listHexagon.append(Hexagon(x, y, newCenter, len(listPoints), typeTerrain[len(listPoints)], optionsTerrain[len(listPoints)]))
 
     return listPoints
 
