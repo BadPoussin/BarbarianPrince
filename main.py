@@ -8,7 +8,6 @@ from grid import *
 
 
 def main():
-    toto=""
     pygame.init()
     dimImage = (707, 1000)
     os.environ['SDL_VIDEO_WINDOW_POS'] = "%d,%d" % (100, 50)
@@ -22,7 +21,7 @@ def main():
     colorRed = (255, 0, 0)
     colorBlue = (0, 0, 255)
     listPoints = create_grid()
-    listColored = [0, 1, 20]
+    listColored = []
 
     clear = lambda: os.system('cls')
     clear()
@@ -31,7 +30,8 @@ def main():
     imgDice = pygame.image.load('Images/dice' + str(diceNumber) + '.png')
     display.blit(imgDice, (70, 880))
 
-    depart, cote, xDepart = start_position(diceNumber)
+    depart, cote, xDepart, listColored = start_position(1, listColored)
+    oldHex = depart
 
     for point in listPoints:
         if listPoints.index(point) == depart:
@@ -89,9 +89,13 @@ def main():
                                 else:
                                     pygame.draw.polygon(display, colorBlue, point, 2)
                                     listColored.append(listPoints.index(point))
+                        isRoadTaken = road_taken(oldHex, hexCliqued)
+                        oldHex = hexCliqued
                         tour = next_tour(tour)
                         display_carac(combat_skill, endurance, wealth_code, wit, diceNumber)
-                        display.blit(imgDice, (70, 880))
+                        if not isRoadTaken:
+                            display.blit(imgDice, (70, 880))
+                            launch_event(diceNumber, hexCliqued)
                         if win_game(wealth_code):
                             print("Vous avez gagné la partie, félicitations !")
         pygame.display.update()

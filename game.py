@@ -1,7 +1,9 @@
 from random import randint
+from grid import *
+from events import *
 
 
-def start_position(number):
+def start_position(number, listColored):
     positionDepart = 0
     xDepart = 0
 
@@ -27,7 +29,25 @@ def start_position(number):
             xDepart = 590
         positionCote = [positionDepart - 1, positionDepart + 1, positionDepart + 20]
 
-    return positionDepart, positionCote, xDepart
+    listColored.append(positionDepart)
+
+    for position in positionCote:
+        listColored.append(position)
+
+    return positionDepart, positionCote, xDepart, listColored
+
+
+def road_taken(old, new):
+    roadTaken = False
+
+    if old > new:
+        if (new, old) in routes:
+            roadTaken = True
+    else:
+        if (old, new) in routes:
+            roadTaken = True
+
+    return roadTaken
 
 
 def next_tour(tour):
@@ -51,6 +71,25 @@ def display_carac(combat_skill, endurance, wealth_code, wit, dice):
 
 def roll_dice():
     return randint(1, 6)
+
+
+def launch_event(dice, hexCliqued):
+    dice1 = int(dice)
+    dice2 = roll_dice()
+    terrain = str(listTerrain[typeTerrain[hexCliqued]])
+    nameEvent = ""
+
+    print("Vous arrivez dans une zone de type " + terrain + ".")
+    print("Vos dés ont pour résultat : " + str(dice1) + " et " + str(dice2) + ".")
+
+    if terrain == "montagnes":
+        for event in event_mountain:
+            if event[0] == (dice1, dice2):
+                nameEvent = event[1]
+
+    print("L'évènement déclenché est le suivant : " + nameEvent + ".")
+
+    return ""
 
 
 def win_game(gold):
