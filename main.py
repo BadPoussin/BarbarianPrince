@@ -8,7 +8,6 @@ from grid import *
 
 
 def main():
-    # init
     pygame.init()
     dimImage = (707, 1000)
     os.environ['SDL_VIDEO_WINDOW_POS'] = "%d,%d" % (100, 50)
@@ -24,26 +23,38 @@ def main():
     listPoints = create_grid()
     listColored = [0, 1, 20]
 
+    clear = lambda: os.system('cls')
+    clear()
+
+    diceNumber = roll_dice()
+    imgDice = pygame.image.load('Images/dice' + str(diceNumber) + '.png')
+    display.blit(imgDice, (70, 880))
+
+    depart, cote, xDepart = start_position(diceNumber)
+
     for point in listPoints:
-        if listPoints.index(point) == 0:
+        if listPoints.index(point) == depart:
             pygame.draw.polygon(display, colorRed, point, 0)
-        elif listPoints.index(point) == 1 or listPoints.index(point) == 20:
+        elif listPoints.index(point) in cote:
             pygame.draw.polygon(display, colorBlue, point, 2)
         else:
             pygame.draw.polygon(display, colorWhite, point, 2)
 
-    display.blit(imgBarbarian, (65, 85))
+    display.blit(imgBarbarian, (xDepart, 85))
 
-    clear = lambda: os.system('cls')
-    clear()
+    barbName = input("Saisissez le nom de votre prince barbare : ")
+    print("Votre nom est donc " + str(barbName) + ".")
 
     tour = 1
     combat_skill = 8
     endurance = 9
     wealth_code = 2
-    wit = 10
+    wit = 2
 
     print("Vous commencez la partie. Début du tour 1.")
+    print()
+    print("Vous êtes sur la case en position de départ n°" + str(diceNumber))
+    print()
     display_carac(combat_skill, endurance, wealth_code, wit, "")
 
     while True:
@@ -80,6 +91,8 @@ def main():
                         tour = next_tour(tour)
                         display_carac(combat_skill, endurance, wealth_code, wit, diceNumber)
                         display.blit(imgDice, (70, 880))
+                        if win_game(wealth_code):
+                            print("Vous avez gagné la partie, félicitations !")
         pygame.display.update()
 
 
