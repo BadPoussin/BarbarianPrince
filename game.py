@@ -77,7 +77,6 @@ def display_carac(combat_skill, endurance, wealth_code, wit, dice):
 def roll_dice():
     return randint(1, 6)
 
-
 def launch_event(dice, hexCliqued):
     dice1 = int(dice)
     dice2 = roll_dice()
