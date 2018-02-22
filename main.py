@@ -30,7 +30,7 @@ def main():
     imgDice = pygame.image.load('Images/dice' + str(diceNumber) + '.png')
     display.blit(imgDice, (70, 880))
 
-    depart, cote, xDepart, listColored = start_position(1, listColored)
+    depart, cote, xDepart, listColored = start_position(diceNumber, listColored)
     oldHex = depart
 
     for point in listPoints:
