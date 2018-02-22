@@ -43,21 +43,20 @@ def main():
 
     display.blit(imgBarbarian, (xDepart, 85))
 
-    barbName = input("Saisissez le nom de votre prince barbare : ")
-    print("Votre nom est donc " + str(barbName) + ".")
-
     life = 100
     tour = 1
     combat_skill = 8
     endurance = 9
-    wealth_code = 2
-    wit = 2
+    wealth = 2
+    wit = roll_dice()
+    if wit == 1:
+        wit = 2
 
-    print("Vous commencez la partie. Début du tour 1.")
+    print("Vous commencez la partie avec un multiplicateur de " + str(wit) + ". Début du tour 1.")
     print()
     print("Vous êtes sur la case en position de départ n°" + str(diceNumber))
     print()
-    display_carac(life, combat_skill, endurance, wealth_code, wit, "")
+    display_carac(life, combat_skill, endurance, wealth, wit, "")
 
     while True:
         for event in pygame.event.get():
@@ -93,11 +92,11 @@ def main():
                         isRoadTaken = road_taken(oldHex, hexCliqued)
                         oldHex = hexCliqued
                         tour = next_tour(tour)
-                        display_carac(combat_skill, endurance, wealth_code, wit, diceNumber)
+                        display_carac(life, combat_skill, endurance, wealth, wit, diceNumber)
                         if not isRoadTaken:
                             display.blit(imgDice, (70, 880))
                             launch_event(diceNumber, hexCliqued)
-                        if win_game(wealth_code):
+                        if win_game(wealth):
                             print("Vous avez gagné la partie, félicitations !")
         pygame.display.update()
 
