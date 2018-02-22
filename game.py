@@ -2,6 +2,11 @@ from random import randint
 from grid import *
 from events import *
 
+preEvent = ['Elfe', 'Nain', 'Semi-Homme']
+noEvent = ['Maison de magicien', 'Petite tempête', 'Tombe', 'Orcs', 'Gobelins', 'Cache gobeline', 'Mésaventure',
+           'Pluie', 'Chute de pierre', 'Ville cachée', 'Passage étroit', 'Passe haut', 'Risques', 'Mines des nains',
+           'Mines abandonnées', 'Temple secret', 'Ruines']
+
 
 def start_position(number, listColored):
     positionDepart = 0
@@ -89,8 +94,7 @@ def launch_event(dice, hexCliqued):
 
     print("L'évènement déclenché est le suivant : " + nameEvent + ".")
 
-    return ""
-
+    return
 
 def win_game(gold):
     return gold >= 500
