@@ -1,3 +1,9 @@
+events = [("magicien",
+                "redirect", ("nain", "tombe", "nain", "tombe", "nain", "tombe")),
+              ("elfe",
+                "pre", ("compétences -", "compétences -", "compétences =", "compétences =", "compétences +", "compétences +"),
+                "choice", ("talk", "evade", "fight"))]
+
 event_mountain = [((1, 1), 'Epeiste'), ((1, 2), 'Rocher'), ((1, 3), 'Tombe'), ((1, 4), 'Mésaventure'),
                   ((1, 5), 'Passage étroit'),
                   ((1, 6), 'Géant'),

@@ -101,12 +101,6 @@ def win_game(gold):
 
 
 def treat_events():
-    events = [("magicien",
-                "redirect", ("nain", "tombe", "nain", "tombe", "nain", "tombe")),
-              ("elfe",
-                "pre", ("compétences -", "compétences -", "compétences =", "compétences =", "compétences +", "compétences +"),
-                "choice", ("talk", "evade", "fight"))]
-
     name_event = "magicien"
     eventToTreat = ""
     for event in events:
