@@ -14,13 +14,15 @@ Présentation du jeu Barbarian Prince :
   - Possibilité de se battre, de se nourrir, de se reposer, de parler et de fuir.
   - Possibilité de se perdre lors dun changement de case.
   - Possibilité de gain dargent.
+  - Possibilité de gain de nourriture
+  - Possibilité de perte de vie lors d'un combat
+  - Evènements et actions disponibles sur tous les terrains
   
   
   Les aspects qui nont pas été développés sont les suivants :
-  - Implémentations des differentes actions suivant les évenements (parler avec un orc, se battre avec un elfe, ...).
   - Implémentation de montures terrestres et volantes.
   - Implémentation des équipes.
   - Implémentation des rivières.
-  - Implémentation des actions sur les terrains : plaine, fermes, collines, forêt, marais, desert.
+  - Implémentation des actions différentes selon les terrains : plaine, fermes, collines, forêt, marais, desert.
   
-  La version actuelle est stable mais le jeu nest pas encore complet.
+  La version actuelle est stable et ludique mais le jeu n'est pas encore complet.
