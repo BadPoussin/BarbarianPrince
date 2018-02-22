@@ -78,7 +78,7 @@ def display_carac(life, combat_skill, endurance, wealth_code, wit, dice):
 def roll_dice():
     return randint(1, 6)
 
-def launch_event(dice, hexCliqued):
+def launch_event(dice, hexCliqued, life, endurance, force, richesse):
     dice1 = int(dice)
     dice2 = roll_dice()
     terrain = str(listTerrain[typeTerrain[hexCliqued]])
@@ -94,27 +94,150 @@ def launch_event(dice, hexCliqued):
 
     print("L'évènement déclenché est le suivant : " + nameEvent + ".")
 
+    treat_events(nameEvent, life, endurance, force, richesse)
+
     return
 
 def win_game(gold):
     return gold >= 500
 
 
-def treat_events():
-    name_event = "magicien"
+def treat_events(name_event, life, endurance, force, richesse):
     eventToTreat = ""
     for event in events:
         if event[0] == name_event:
-            eventToTreat = event[0]
+            eventToTreat = event
             break
-    if eventToTreat[1]:
-        if eventToTreat[1] == "redirect":
-            dice = roll_dice()
-            if dice == 1:
-            elif dice == 2:
-            elif dice == 3:
-            elif dice == 4:
-            elif dice == 5:
-            elif dice == 6:
-        elif eventToTreat[1] == "pre":
-        elif eventToTreat[1] == "choice":
+    nextEvent = True
+    numberEvent = 1
+    while nextEvent:
+        nextEvent = False
+        try:
+            eventToTreat[numberEvent]
+        except NameError:
+            nextEvent = False
+        else:
+            if eventToTreat[numberEvent] == "redirect":
+                dice = roll_dice()
+                if dice == 1:
+                    print("Vous allez être redirigé vers l'évènement suivant : "+eventToTreat[numberEvent+1][0])
+                    #treat_events(eventToTreat[numberEvent+1][0])
+                elif dice == 2:
+                    print("Vous allez être redirigé vers l'évènement suivant : " + eventToTreat[numberEvent + 1][1])
+                    #treat_events(eventToTreat[numberEvent+1][1])
+                elif dice == 3:
+                    print("Vous allez être redirigé vers l'évènement suivant : " + eventToTreat[numberEvent + 1][2])
+                    #treat_events(eventToTreat[numberEvent+1][2])
+                elif dice == 4:
+                    print("Vous allez être redirigé vers l'évènement suivant : " + eventToTreat[numberEvent + 1][3])
+                    #treat_events(eventToTreat[numberEvent+1][3])
+                elif dice == 5:
+                    print("Vous allez être redirigé vers l'évènement suivant : " + eventToTreat[numberEvent + 1][4])
+                    #treat_events(eventToTreat[numberEvent+1][4])
+                elif dice == 6:
+                    print("Vous allez être redirigé vers l'évènement suivant : " + eventToTreat[numberEvent + 1][5])
+                    #treat_events(eventToTreat[numberEvent+1][5])
+            elif eventToTreat[numberEvent] == "pre":
+                dice = roll_dice()
+                eventEnCours = ""
+                if dice == 1:
+                    eventEnCours = eventToTreat[numberEvent+1][0]
+                elif dice == 2:
+                    eventEnCours = eventToTreat[numberEvent+1][1]
+                elif dice == 3:
+                    eventEnCours = eventToTreat[numberEvent+1][2]
+                elif dice == 4:
+                    eventEnCours = eventToTreat[numberEvent+1][3]
+                elif dice == 5:
+                    eventEnCours = eventToTreat[numberEvent+1][4]
+                elif dice == 6:
+                    eventEnCours = eventToTreat[numberEvent+1][5]
+                print("Attention : " + eventEnCours)
+                if len(eventEnCours.split(':')) > 1:
+                    eventEnCoursSplit1 = eventEnCours.split(':')
+                    val = 0
+                    friends = 0
+                    for eventEnCoursSplit2 in eventEnCoursSplit1:
+                        if eventEnCoursSplit2 == 'friends':
+                            friends = val
+                        elif eventEnCoursSplit2 == 'force':
+                            force += val
+                        elif eventEnCoursSplit2 == 'endurance':
+                            endurance += val
+                        elif eventEnCoursSplit2 == 'richesse':
+                            richesse += val
+                        else:
+                            val = eventEnCoursSplit2
+
+
+            elif eventToTreat[numberEvent] == "choice":
+                print("Vous avez "+str(len(eventToTreat[numberEvent+1]))+" possibilités :")
+                for possibility in eventToTreat[numberEvent+1]:
+                    print("\t- "+possibility)
+                verif = False
+                while not verif:
+                    choice = input("Que choississez vous ?\n")
+                    for possibility in eventToTreat[numberEvent + 1]:
+                        if choice == possibility:
+                            verif = True
+                    if not verif:
+                        print("Veuillez renseigner un des choix proposés ! ")
+                dice = roll_dice()
+                if choice == "talk":
+                    print("Vous avez choisi d'argumenter.")
+                    '''if dices < 4:
+                        dices = roll_dice()
+                        print(check_conversation(dices))
+                    elif dice == 4:
+
+                    elif dice == 5:
+                    elif dice == 6:'''
+                elif choice == "evade":
+                    print("Vous avez choisi de vous évader.")
+                elif choice == "fight":
+                    print("Vous avez choisi de vous battre.")
+                elif choice == "search":
+                    print("Vous avez choisi de rechercher.")
+                elif choice == "rest":
+                    print("Vous avez choisi de vous reposer.")
+                elif choice == "food":
+                    print("Vous avez choisi de vous nourrir.")
+            elif eventToTreat[numberEvent] == "condition":
+                print("Etat actuel : "+eventToTreat[numberEvent+1][0])
+                print("Resultat : "+eventToTreat[numberEvent+1][1])
+            elif eventToTreat[numberEvent] == "boucle":
+                condition = True
+                while condition:
+                    dice = roll_dice()
+                    if dice < 4:
+                        print("Etat : "+eventToTreat[numberEvent+1][0])
+                        print("Resultat : "+eventToTreat[numberEvent+1][1])
+                    else:
+                        condition = False
+                        print("Terminé.")
+            elif eventToTreat[numberEvent] == "approche":
+                condition = True
+
+        '''try:
+            eventToTreat[numberEvent+2]
+        except NameError:
+            nextEvent = False
+        else:
+            numberEvent += 2
+            nextEvent = True'''
+        if len(eventToTreat) > numberEvent+2:
+            numberEvent += 2
+            nextEvent = True
+    return life, endurance, force, richesse
+
+def check_conversation(number):
+    response = ""
+    if number == 1:
+        response = "Un assassin vous surprend et vous tue !"
+    elif number == 2:
+        response = "La personne avec qui vous argumentez vous attaque !"
+    elif number == 3 or number == 4:
+        response == "La personne avec qui vous argumentez décide de rejoindre votre équipe."
+    else:
+        response = "La personne avec qui vous argumentez vous laisse partir."
+    return response
