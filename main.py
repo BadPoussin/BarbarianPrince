@@ -97,7 +97,7 @@ def main():
                             display_carac(life, combat_skill, endurance, wealth, wit, diceNumber)
                             if not isRoadTaken:
                                 display.blit(imgDice, (70, 880))
-                                launch_event(diceNumber, hexCliqued, life, endurance, combat_skill, wealth)
+                                life, endurance, combat_skill, wealth = launch_event(diceNumber, hexCliqued, life, endurance, combat_skill, wealth)
                             if win_game(wealth):
                                 print("Vous avez gagné la partie, félicitations !")
 
