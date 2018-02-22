@@ -75,8 +75,8 @@ def display_carac(life, combat_skill, endurance, wealth_code, wit, dice):
     return ""
 
 
-def roll_dice():
-    return randint(1, 6)
+def roll_dice(max_jet = 6):
+    return randint(1, max_jet)
 
 def launch_event(dice, hexCliqued, life, endurance, force, richesse):
     dice1 = int(dice)
@@ -157,15 +157,18 @@ def treat_events(name_event, life, endurance, force, richesse):
                     eventEnCoursSplit1 = eventEnCours.split(':')
                     val = 0
                     friends = 0
+                    newForce = 0
+                    newEndurance = 0
+                    newRichesse = 0
                     for eventEnCoursSplit2 in eventEnCoursSplit1:
                         if eventEnCoursSplit2 == 'friends':
                             friends = val
                         elif eventEnCoursSplit2 == 'force':
-                            force += val
+                            newForce += val
                         elif eventEnCoursSplit2 == 'endurance':
-                            endurance += val
+                            newEndurance += val
                         elif eventEnCoursSplit2 == 'richesse':
-                            richesse += val
+                            newRichesse += val
                         else:
                             val = eventEnCoursSplit2
 
