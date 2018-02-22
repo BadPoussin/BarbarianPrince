@@ -62,11 +62,12 @@ def next_tour(tour):
     return nextTour
 
 
-def display_carac(combat_skill, endurance, wealth_code, wit, dice):
+def display_carac(life, combat_skill, endurance, wealth_code, wit, dice):
     if dice != "":
         print('Lancer de dé : ' + dice)
         print()
     print('Voici vos caractéristiques : ')
+    print('\t - Vie : ' + str(life))
     print('\t - Force : ' + str(combat_skill))
     print('\t - Endurance : ' + str(endurance))
     print('\t - Richesse : ' + str(wealth_code))

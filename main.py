@@ -46,6 +46,7 @@ def main():
     barbName = input("Saisissez le nom de votre prince barbare : ")
     print("Votre nom est donc " + str(barbName) + ".")
 
+    life = 100
     tour = 1
     combat_skill = 8
     endurance = 9
@@ -56,7 +57,7 @@ def main():
     print()
     print("Vous êtes sur la case en position de départ n°" + str(diceNumber))
     print()
-    display_carac(combat_skill, endurance, wealth_code, wit, "")
+    display_carac(life, combat_skill, endurance, wealth_code, wit, "")
 
     while True:
         for event in pygame.event.get():
