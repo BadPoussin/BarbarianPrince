@@ -98,3 +98,29 @@ def launch_event(dice, hexCliqued):
 
 def win_game(gold):
     return gold >= 500
+
+
+def treat_events():
+    events = [("magicien",
+                "redirect", ("nain", "tombe", "nain", "tombe", "nain", "tombe")),
+              ("elfe",
+                "pre", ("compétences -", "compétences -", "compétences =", "compétences =", "compétences +", "compétences +"),
+                "choice", ("talk", "evade", "fight"))]
+
+    name_event = "magicien"
+    eventToTreat = ""
+    for event in events:
+        if event[0] == name_event:
+            eventToTreat = event[0]
+            break
+    if eventToTreat[1]:
+        if eventToTreat[1] == "redirect":
+            dice = roll_dice()
+            if dice == 1:
+            elif dice == 2:
+            elif dice == 3:
+            elif dice == 4:
+            elif dice == 5:
+            elif dice == 6:
+        elif eventToTreat[1] == "pre":
+        elif eventToTreat[1] == "choice":
