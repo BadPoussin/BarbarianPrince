@@ -44,7 +44,7 @@ def main():
     display.blit(imgBarbarian, (xDepart, 85))
 
     life = 100
-    tour = 1
+    tour = 0
     combat_skill = 8
     endurance = 9
     wealth = 2
@@ -52,7 +52,7 @@ def main():
     if wit == 1:
         wit = 2
 
-    print("Vous commencez la partie avec un multiplicateur de " + str(wit) + ". Début du tour 1.")
+    print("Vous commencez la partie avec un multiplicateur de " + str(wit))
     print()
     print("Vous êtes sur la case en position de départ n°" + str(diceNumber))
     print()
@@ -65,39 +65,42 @@ def main():
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
+                clear()
+                tour = next_tour(tour)
                 diceNumber = str(roll_dice())
                 imgDice = pygame.image.load('Images/dice' + diceNumber + '.png')
                 listPoints, hexCliqued, hexCenter, hexToColored = search_hexagon(pos)
-                if hexCliqued != -1:
-                    if hexCliqued in listColored:
-                        listColored.clear()
-                        display.blit(resizedImg, (0, 0))
-                        for point in listPoints:
-                            if listPoints.index(point) == hexCliqued:
-                                pygame.draw.polygon(display, colorRed, point, 0)
-                                display.blit(imgBarbarian, (hexCenter.x - 11.5, hexCenter.y - 12))
-                                listColored.append(hexCliqued)
-                            else:
-                                isColored = False
-                                for hex in hexToColored:
-                                    if listPoints.index(point) == hex:
-                                        isColored = True
-                                        break
-
-                                if not isColored:
-                                    pygame.draw.polygon(display, colorWhite, point, 2)
+                if not is_lost(str(listTerrain[typeTerrain[hexCliqued]])):
+                    if hexCliqued != -1:
+                        if hexCliqued in listColored:
+                            listColored.clear()
+                            display.blit(resizedImg, (0, 0))
+                            for point in listPoints:
+                                if listPoints.index(point) == hexCliqued:
+                                    pygame.draw.polygon(display, colorRed, point, 0)
+                                    display.blit(imgBarbarian, (hexCenter.x - 11.5, hexCenter.y - 12))
+                                    listColored.append(hexCliqued)
                                 else:
-                                    pygame.draw.polygon(display, colorBlue, point, 2)
-                                    listColored.append(listPoints.index(point))
-                        isRoadTaken = road_taken(oldHex, hexCliqued)
-                        oldHex = hexCliqued
-                        tour = next_tour(tour)
-                        display_carac(life, combat_skill, endurance, wealth, wit, diceNumber)
-                        if not isRoadTaken:
-                            display.blit(imgDice, (70, 880))
-                            launch_event(diceNumber, hexCliqued)
-                        if win_game(wealth):
-                            print("Vous avez gagné la partie, félicitations !")
+                                    isColored = False
+                                    for hex in hexToColored:
+                                        if listPoints.index(point) == hex:
+                                            isColored = True
+                                            break
+
+                                    if not isColored:
+                                        pygame.draw.polygon(display, colorWhite, point, 2)
+                                    else:
+                                        pygame.draw.polygon(display, colorBlue, point, 2)
+                                        listColored.append(listPoints.index(point))
+                            isRoadTaken = road_taken(oldHex, hexCliqued)
+                            oldHex = hexCliqued
+                            display_carac(life, combat_skill, endurance, wealth, wit, diceNumber)
+                            if not isRoadTaken:
+                                display.blit(imgDice, (70, 880))
+                                launch_event(diceNumber, hexCliqued, life, endurance, combat_skill, wealth)
+                            if win_game(wealth):
+                                print("Vous avez gagné la partie, félicitations !")
+
         pygame.display.update()
 
 
